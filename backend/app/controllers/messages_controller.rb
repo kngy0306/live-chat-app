@@ -1,4 +1,5 @@
 class MessagesController < ApplicationController
+  before_action :authenticate_user!, only: ["index"]
   def index
     messages = Message.eager_load(:user)
     logger.debug("Message.allで取得した結果 #{messages}")
