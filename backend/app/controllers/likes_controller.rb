@@ -11,4 +11,14 @@ class LikesController < ApplicationController
       render json: { message: 'いいねが登録できませんでした', errors: like.errors.messages }, status: :bad_request
     end
   end
+
+  def destroy
+    like = Like.find(params[:id])
+
+    if like.destroy
+      render json: { id: like.id, email: current_user.email, message: 'いいねを削除しました' }, status: :ok
+    else
+      render json: { message: 'いいねが削除できませんでした', errors: like.errors.messages }, status: :bad_request
+    end
+  end
 end
