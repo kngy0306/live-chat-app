@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
-  before_action :authenticate_user!, only: ["index"]
+  before_action :authenticate_user!, only: [:index]
+
   def index
     messages = Message.eager_load(:user)
     logger.debug("Message.allで取得した結果 #{messages}")
@@ -14,6 +15,6 @@ class MessagesController < ApplicationController
       }
     end
     logger.debug("Message.all→mapで整形した結果 #{messages_array}")
-    render json: messages_array, status: 200
+    render json: messages_array, status: :ok
   end
 end
