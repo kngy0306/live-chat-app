@@ -18,4 +18,8 @@ class MessagesController < ApplicationController
     logger.debug("Message.all→mapで整形した結果 #{messages_array}")
     render json: messages_array, status: :ok
   end
+
+  def create
+    messages = Message.find_by
+  end
 end
