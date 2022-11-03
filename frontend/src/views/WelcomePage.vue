@@ -1,14 +1,18 @@
 <template>
   <div>
     <h1>{{ title }}</h1>
-    <p v-if="isEnabled">{{ subtitle }}</p>
-    <button @dblclick="toggle">トグルボタン(ダブルクリック)</button>
-    <p>{{ text }}</p>
+    <ChildComponent message="親コンポーネントからpropsで渡したmessage" @toggle="toggle" />
+    <p v-if="isEnabled">クリックで表示された</p>
   </div>
 </template>
 
 <script>
+import ChildComponent from '@/components/ChildComponent.vue'
+
 export default {
+  components: {
+    ChildComponent
+  },
   data() {
     return {
       title: '初めてのvueアプリ',
