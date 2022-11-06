@@ -2,11 +2,11 @@
   <div class="container welcome">
     <p>ようこそ！</p>
     <div v-if="shouldShowLoginForm">
-      <LoginForm />
+      <LoginForm @redirectToChatRoom="redirectToChatRoom" />
       <p class="change-form">初めての方は<span @click="changeFrom">こちら</span>をクリック</p>
     </div>
     <div v-if="!shouldShowLoginForm">
-      <SignupForm />
+      <SignupForm @redirectToChatRoom="redirectToChatRoom" />
       <p class="change-form">アカウントをお持ちの方は<span @click="changeFrom">こちら</span>をクリック</p>
     </div>
   </div>
@@ -26,6 +26,9 @@ export default {
   methods: {
     changeFrom() {
       this.shouldShowLoginForm = !this.shouldShowLoginForm
+    },
+    redirectToChatRoom() {
+      this.$router.push({ name: 'ChatRoom' })
     }
   }
 }

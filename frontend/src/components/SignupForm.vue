@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>アカウントを登録</h2>
-    <form>
+    <form @submit.prevent="signUp">
       <input type="text" required placeholder="名前" v-model="name">
       <input type="email" required placeholder="メールアドレス" v-model="email">
       <input type="password" required placeholder="パスワード" v-model="password">
@@ -12,13 +12,39 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
+  emits: ['redirectToChatRoom'],
   data () {
     return {
       name: '',
       email: '',
       password: '',
-      passwordConfirmation: ''
+      passwordConfirmation: '',
+      error: null
+    }
+  },
+  methods: {
+    async signUp () {
+      this.error = null
+
+      try {
+        const res = await axios.post('http://localhost:3000/auth', {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          password_confirmation: this.passwordConfirmation
+          }
+        )
+        if (!res) throw new Error('アカウントを登録できませんでした。')
+        if (!this.error) this.$emit('redirectToChatRoom')
+
+        console.log({ res })
+        return res
+      } catch (error) {
+        this.error = 'アカウントを登録できませんでした。'
+      }
     }
   }
 }
