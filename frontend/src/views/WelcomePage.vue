@@ -1,35 +1,71 @@
 <template>
-  <div>
-    <h1>{{ title }}</h1>
-    <ChildComponent message="親コンポーネントからpropsで渡したmessage" @toggle="toggle" />
-    <p v-if="isEnabled">クリックで表示された</p>
+  <div class="container welcome">
+    <p>ようこそ！</p>
+    <div v-if="shouldShowLoginForm">
+      <LoginForm @redirectToChatRoom="redirectToChatRoom" />
+      <p class="change-form">初めての方は<span @click="changeFrom">こちら</span>をクリック</p>
+    </div>
+    <div v-if="!shouldShowLoginForm">
+      <SignupForm @redirectToChatRoom="redirectToChatRoom" />
+      <p class="change-form">アカウントをお持ちの方は<span @click="changeFrom">こちら</span>をクリック</p>
+    </div>
   </div>
 </template>
 
 <script>
-import ChildComponent from '@/components/ChildComponent.vue'
+import LoginForm from '@/components/LoginForm.vue'
+import SignupForm from '@/components/SignupForm.vue'
 
 export default {
-  components: {
-    ChildComponent
-  },
+  components: { LoginForm, SignupForm },
   data() {
     return {
-      title: '初めてのvueアプリ',
-      subtitle: 'ようこそ',
-      isEnabled: true
-    }
-  },
-  computed: {
-    text() {
-      if (this.isEnabled) return 'こんにちは！'
-      return 'さようなら！'
+      shouldShowLoginForm: true
     }
   },
   methods: {
-    toggle() {
-      this.isEnabled = !this.isEnabled
+    changeFrom() {
+      this.shouldShowLoginForm = !this.shouldShowLoginForm
+    },
+    redirectToChatRoom() {
+      this.$router.push({ name: 'ChatRoom' })
     }
   }
 }
 </script>
+
+<style>
+.welcome {
+  text-align: center;
+  padding: 20px 0;
+}
+.welcome form {
+    width: 300px;
+    margin: 20px auto;
+  }
+  .welcome label {
+    display: block;
+    margin: 20px 0 10px;
+  }
+  .welcome input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px auto;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    outline: none;
+    box-sizing: border-box;
+  }
+  .welcome span{
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .welcome button {
+    margin: 20px auto;
+  }
+  .change-form {
+    font-size: 14px;
+    margin: 10px;
+  }
+</style>
