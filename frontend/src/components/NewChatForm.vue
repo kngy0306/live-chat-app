@@ -3,17 +3,25 @@
     <textarea
       placeholder="メッセージを入力してEnterを押してください"
       v-model="message"
+      @keypress.enter.prevent="handleSubmit"
     ></textarea>
   </form>
 </template>
 
 <script>
 export default {
-  data () {
+  emits: ['connectCable'],
+  data() {
     return {
       message: ''
     }
-  }  
+  },
+  methods: {
+    handleSubmit() {
+      this.$emit('connectCable', this.message)
+      this.message = ''
+    }
+  }
 }
 </script>
 
