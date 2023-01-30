@@ -1,0 +1,10 @@
+name: APIのリポジトリの GraphQL Schema IDL を読んで TypeScript の型を生成し、PRを作成する
+on:
+  repository_dispatch:
+    types: [ repository-dispatch-test ]
+jobs:
+  repository-dispatch-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "awesome_eventsレポジトリからイベントを受け取りました。"
