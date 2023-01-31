@@ -7,4 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: echo "awesome_eventsレポジトリからイベントを受け取りました。"
+      - name: README.mdを更新
+        run: echo "awesome_eventsレポジトリからイベントを受け取りました。" >> README.md
+      - name: PR作成
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.PAT }}
+          branch: test_root
+          title: '[bot]awesome_eventsのREADME.mdが更新されたのでPR作成'
