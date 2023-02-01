@@ -7,15 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: README.mdを更新
-        run: echo "awesome_eventsレポジトリからイベントを受け取りました。" >> README.md
+        with:
+          repository: kngy0306/live-chat-app
+          ref: ${{ github.event.client_payload.ref }}
+      - name: README2.mdを作成
+        run: cat README.md >> README2.md
       - name: PR作成
-        # uses: peter-evans/create-pull-request@v3
-        # with:
-        #   token: ${{ secrets.PAT }}
-        #   base: test_root
-        #   branch: test_pr_branch
-        #   title: '[bot]awesome_eventsのREADME.mdが更新されたのでPR作成'
-        run: gh pr create -B "feature/project_root" -t "[bot]PR" -b ""
-        env:
-          GH_TOKEN: ${{ secrets.PAT }}
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.PAT }}
+          base: test_root
+          branch: test_pr_branch
+          title: '[bot]awesome_eventsのREADME.mdが更新されたのでPR作成'
+        # run: gh pr create -B "feature/project_root" -t "[bot]PR" -b "test"
+        # env:
+        #   GH_TOKEN: ${{ secrets.PAT }}
