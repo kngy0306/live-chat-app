@@ -10,8 +10,9 @@ jobs:
         with:
           repository: kngy0306/live-chat-app
           ref: ${{ github.event.client_payload.ref }}
+          token: ${{ secrets.PAT }}
       - name: awesome_eventsリポジトリのrawファイルを読み取り
-        run: GITHUB_PAT=${{ secrets.PAT }} curl https://raw.githubusercontent.com/kngy0306/awesome_events/main/README.md
+        run: curl "https://raw.githubusercontent.com/kngy0306/awesome_events/main/README.md"
       # - name: PR作成
         # uses: peter-evans/create-pull-request@v3
         # with:
