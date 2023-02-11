@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   before_action :authenticate_user!, only: [:index]
 
   def index
-    messages = Message.eager_load(:user)
+    messages = Message.includes(:user, [likes: :user])
     logger.debug("Message.allで取得した結果 #{messages}")
     messages_array = messages.map do |message|
       {
